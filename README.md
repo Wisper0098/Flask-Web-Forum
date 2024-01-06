@@ -25,7 +25,7 @@ The project is containerized using Docker, making it easy to deploy and scale. P
 Whether you're a tech enthusiast, hobbyist, or professional, join the conversation! Share your knowledge, learn from others, and build a vibrant community around shared interests.
 
 ## How to Run
-1. Clone the repository: `git clone https://github.com/your-username/flask-web-forum.git`
+1. Clone the repository: `git clone https://github.com/Wisper0098/flask-web-forum.git`
 2. Navigate to the project directory: `cd flask-web-forum`
 3. Build and run the Docker containers: `docker-compose up -d`
 4. Access the forum at [http://localhost:4000](http://localhost:4000)
