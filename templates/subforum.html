@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{subforum.sub_forum_name}}{% endblock %}
+
+{% block content %}
+
+	<style>
+		.posts 
+		{
+			position: relative;
+			width: 70%;
+			height: 100%;
+			margin: auto;
+		}
+	</style>
+
+	<br>
+	<h3>{{subforum.sub_forum_name}}	<a href="/addpost/{{subforum.sub_forum_id}}"><button type="button" class="btn btn-primary">Add post</button></a>
+</h3>
+	<hr>
+	<h3>Posts ({{subforum.get_posts_count(subforum.id)}}) items:</h3>
+	<hr>
+	<div class="posts">
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">Post ID</th>
+		      <th scope="col">Post name</th>
+		      <th scope="col">Post author</th>
+		      <th scope="col">Date added</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{% for post in posts %}
+			    <tr>
+			      <th scope="row">{{post.id}}</th>
+			      <td>{{post.post_title}}</td>
+			      <td>{{post.get_author()}}</td>
+			      <td>{{post.get_time_string()}}</td>
+			      <td><a href="/viewpost?post={{post.id}}"><button type="button" class="btn btn-dark">View</button></a></td>
+			    </tr>
+			{% endfor %}
+		  </tbody>
+		</table>
+		<nav aria-label="Page navigation example">
+  			<ul class="pagination">
+           		<li class="page-item">
+           			<a class="page-link {% if posts.page == 1 %}disabled{% endif %}" href="{{ url_for('subforum',
+						sub=subforum.sub_forum_id, page=posts.prev_num) }}"
+						>Previous
+					</a>
+				</li>
+    
+				{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+					{% if posts.page == page_num %}
+						<li class="page-item"><a class="page-link" href="{{url_for('subforum',
+						sub=subforum.sub_forum_id, page=page_num)}}">{{page_num}}</a></li>
+					{% else %}
+						<li class="page-item"><a class="page-link" href="{{url_for('subforum', sub=subforum.sub_forum_id, page=page_num)}}">{{page_num}}</a></li>
+					{% endif %}
+				{% endfor %}
+				<li class="page-item">
+           			<a class="page-link {% if posts.page == posts.pages %}disabled {% endif %}" href="{{ url_for('subforum',
+						sub=subforum.sub_forum_id, page=posts.page+1) }}"
+						>Next
+					</a>
+				</li>
+
+			</ul>
+		</nav>
+	</div>
+
+
+{% endblock %}

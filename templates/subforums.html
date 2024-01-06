@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Subforums{% endblock %}
+
+{% block content %}
+	<div style="height: 10px"></div>
+	<hr>
+	<h3>Subforums</h3>
+		<a href="/subforums"><button type="button" class="btn btn-primary">All</button></a>
+		<a href="/subforums/my"><button type="button" class="btn btn-primary">My</button></a>
+		<hr>
+		<div class="row">
+		{% if subforums %}
+
+			{% for subforum in subforums %}
+						<br>
+						<div class="card">
+							<p><b></b></p>
+						  <div class="card-body">
+						    <h5 class="card-title">{{subforum.sub_forum_name}}</h5>
+						    <p class="card-text">{{subforum.sub_forum_description}}</p>
+						    <a href="/sub/{{subforum.sub_forum_id}}" class="btn btn-primary">See posts</a>
+						  </div>
+						</div>
+						<hr>
+			{% endfor %}
+		{% endif %}
+		</div>
+		<nav aria-label="Page navigation example">
+  			<ul class="pagination">
+           		<li class="page-item">
+           			<a class="page-link {% if subforums.page == 1 %}disabled{% endif %}" href="{{url_for('subforums', page=subforums.prev_num)}}"
+						>Previous
+					</a>
+				</li>
+
+				{% for page_num in subforums.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+					{% if subforums.page == page_num %}
+						<li class="page-item"><a class="page-link" href="{{url_for('subforums',
+						page=page_num)}}">{{page_num}}</a></li>
+					{% else %}
+						<li class="page-item"><a class="page-link" href="{{url_for('subforums',
+						page=page_num)}}">{{page_num}}</a></li>
+					{% endif %}
+				{% endfor %}
+				<li class="page-item">
+           			<a class="page-link {% if subforums.page == subforums.pages %}disabled {% endif %}" href="{{ url_for('subforums', page=subforums.page+1) }}"
+						>Next
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<br>
+	</div>
+{% endblock %}

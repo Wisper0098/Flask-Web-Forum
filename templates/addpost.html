@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Add post{% endblock %}
+
+{% block content %}
+	<div class="wrapper position-absolute top-50 start-50 translate-middle" style="width: 75%">
+		<h3>Add post</h3>
+		<hr>
+		<form action="/action_post" method="POST" enctype="multipart/form-data">
+			<div class="input-group mb-3">
+			  {% if id %}
+			  <input type="text" name="subforum_id" class="form-control" value="{{id}}" readonly>
+			  {% else %}
+			  		<input type="text" name="subforum_id" class="form-control" placeholder="Subforum Name/ID">
+			  {% endif %}
+			  <span class="input-group-text">@</span>
+			  <input type="text" name="post_title" class="form-control" placeholder="Post Name">
+			</div>
+			<textarea class="form-control" placeholder="Post content" name="post_content" style="height: 100px"></textarea>
+			<br>
+			<input class="form-control" type="file" name="form_file" multiple>
+			<br>
+			<button type="submit" class="btn btn-success">Add post</button>
+		</form>
+		<br>
+		{% if errors %}
+			{% for error in errors %}
+				<p><b>{{error}}</b></p>
+			{% endfor %}
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}{{post.post_title}}{% endblock %}
+
+{% block content %}
+	<br>
+ 	<button type="button" class="btn btn-danger" onclick="goPrev()">Go back</button>
+	<br>
+	<div class="container text-center">
+		<div class="card">
+			<div class="card-body">
+			    <h3>{{post.post_title}}</h3>
+				<p style="padding-left: 1%">ID: <b>{{post.id}}</b></p>
+				<p style="padding-left: 1%">Date added: <b>{{ post.post_date.strftime('%y-%m-%d %a %H:%M:%S') }}</b></p>
+			</div>
+		</div>
+		<br>
+		<div class="card">
+	  		<div class="card-body">
+	  			<h5 class="card-title">Content</h5>
+	    		{{post.post_content}}
+	  		</div>
+		</div>
+		{% if images or videos %}
+			<br>
+			<div class="card">
+	  		<div class="card-body">
+	  			<h5 class="card-title">Media</h5>
+	  				{% if images %}
+			  			{% for img in images %}
+			  				{% if img %}
+				  				<a href=""><img src="data:;base64,{{ images[img] }}" width="150" height="150" /></a>
+				  				<a href="/download/{{img}}"><button type="button" class="btn btn-dark	">Download</button></a>
+				  			{% endif %}
+		  				{% endfor %}
+		  			{% endif %}
+
+		  			{% if videos %}
+		  				{% for vid in videos %}
+		  					{% if vid %}
+		  						<hr>
+				  				<video width="100%" height="314" controls>
+		  							<source src="data:;base64,{{ videos[vid] }}" type="video/mp4">
+								</video>
+								<a href="/download/{{vid}}"><button type="button" class="btn btn-dark	">Download</button></a>
+							{% endif %}
+						{% endfor %}
+	  				{% endif %}
+	  		</div>
+		</div>
+		{% endif %}
+		<br>
+		<div class="card">
+	  		<div class="card-body">
+	  			<h5 class="card-title">Comments</h5>
+	    		<form action="/action_comment?post={{post.id}}" method="POST">
+					<div class="input-group mb-3">
+					  <span class="input-group-text" id="inputGroup-sizing-default">Write your comment</span>
+					  <input type="text" name="com_content" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="write here...">
+					  <button type="submit" class="btn btn-success">Post</button>
+					</div>
+				</form>
+				{% if comments %}
+					<hr>
+					{% for comment in comments %}
+						<div class="card">
+							User: {{comment.get_author().username}}
+	  						<div class="card-body">
+	  							{{comment.content}}
+	  						</div>
+	  					</div>
+					{% endfor %}
+				{% endif %}
+	  		</div>
+		</div>
+	</div>
+
+	<script>
+		function goPrev()
+			{
+			window.history.back();
+			}
+	</script>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        .wrapper
+        {
+            width: 50%;
+        }
+    </style>
+    <div class="wrapper position-absolute top-50 start-50 translate-middle">
+        <form action="/action_login" method="POST">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Username:</label>
+          <input type="text" name="username" class="form-control" placeholder="Username">
+          <br>
+          <label for="exampleFormControlInput1" class="form-label">Password:</label>
+          <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>  
+        <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        {% if errors %}
+        {% for error in errors %}
+          <p><b>{{error}}</b></p>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

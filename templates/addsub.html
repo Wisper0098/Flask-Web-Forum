@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Add subforum{% endblock %}
+
+{% block content %}
+	<div class="wrapper position-absolute top-50 start-50 translate-middle" style="width: 75%">
+		<h2>Create Subforum</h2>
+		<form method="POST">
+			<hr>
+			<div class="input-group mb-3">
+	  			<span class="input-group-text" id="inputGroup-sizing-default">Subforum Name</span>
+	  			<input type="text" name="sub_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Subforum name">
+			</div>
+			<hr>
+			<div>
+				<input class="form-check-input" type="checkbox" name="readonly" value="" aria-label="Checkbox for following text input"> Read-only (only creator can add posts)
+			</div>
+			<hr>
+			<div class="input-group mb-3">
+  				<span class="input-group-text" id="inputGroup-sizing-default">Short decription</span>
+  				<input type="text" value="No decription" name="sub_decrpt" class="form-control" placeholder="Write description (max 100 symbols)">
+			</div>
+			<button type="submit" class="btn btn-success">Add subforum</button>
+		</form>
+		<br>
+		{% if errors %}
+			{% for error in errors %}
+				<p><b>{{ error }}</b></p>
+			{% endfor %}
+		{% endif %}
+	</div>
+{% endblock %}

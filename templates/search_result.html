@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Results: {{ query }}{% endblock %}
+
+{% block content %}
+	<br>
+	<button type="button" class="btn btn-danger" onclick="goPrev()">Go back</button>
+	<hr>
+		{% if results %}
+	    		<h3>Search results for "{{ query }}":</h3>
+	    		{% for result in results %}
+		    		{% if request.args.get('t') == 'user' %}
+		    			<div class="card">
+						  <div class="card-body">
+						    <h5 class="card-title">User: {{result.username}}</h5>
+						    <a href="/user/{{result.username}}" class="btn btn-primary">View</a>
+						  </div>
+						</div>
+		    		{% endif %}
+		    		{% if request.args.get('t') == 'subforum' %}
+		    			<div class="card">
+						  <div class="card-body">
+						    <h5 class="card-title">Subforum: {{result.sub_forum_name}}</h5>
+						    <a href="/sub/{{result.sub_forum_id}}" class="btn btn-primary">View</a>
+						  </div>
+						</div>
+		    		{% endif %}
+		    		{% if request.args.get('t') == 'post' %}
+		    			<br>
+		    			<div class="card">
+						  <div class="card-body">
+						    <h5 class="card-title">Post: {{result.post_title}}</h5>
+						    <a href="/viewpost?post={{result.id}}" class="btn btn-primary">View</a>
+						  </div>
+						</div>
+						<br>
+		    		{% endif %}
+
+	    		{% endfor %}
+	  	{% endif %}
+
+	<script>
+		function goPrev()
+			{
+			window.history.back();
+			}
+	</script>
+{% endblock %}
